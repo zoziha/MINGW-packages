@@ -3,7 +3,7 @@
 _realname=fpm
 pkgbase=mingw-w64-${_realname}
 pkgname="${MINGW_PACKAGE_PREFIX}-${_realname}"
-pkgver=0.10.0
+pkgver=0.11.0
 pkgrel=1
 arch=('any')
 mingw_arch=('mingw64' 'ucrt64')
@@ -18,8 +18,8 @@ makedepends=("${MINGW_PACKAGE_PREFIX}-fc"
 optdepends=("git: Support for fetching projects with git")
 source=(${_realname}-${pkgver}.zip::"${url}/releases/download/v${pkgver}/fpm-${pkgver}.zip"
         ${_realname}-${pkgver}.F90::"${url}/releases/download/v${pkgver}/fpm-${pkgver}.F90")
-sha256sums=('00d687e17bdada4dcae0ff1ea2e01bad287dcc77a74c3bbde0c9ff9633b655bb'
-            '48e563db74af6b9396ebe4a67bd371210e2ea8c6e2b3cc230e68183ce7509422')
+sha256sums=('f6c998c9afd39eb42c7e80a306cfbed5faa77eaa42eb4f75b93864c338db1795'
+            '988a3317ee2448ee7207d0a29410f08a79c86bddac3314b2a175801a9cf58d27')
 noextract=(${_realname}-${pkgver}.F90)
 
 build() {
