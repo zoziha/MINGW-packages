@@ -5,6 +5,7 @@ pkgbase=mingw-w64-${_realname}
 pkgname="${MINGW_PACKAGE_PREFIX}-${_realname}"
 pkgver=0.11.0
 pkgrel=1
+bootstrap=0.8.2
 arch=('any')
 mingw_arch=('mingw64' 'ucrt64')
 pkgdesc="Fortran package manager (mingw-w64)"
@@ -16,11 +17,12 @@ depends=("${MINGW_PACKAGE_PREFIX}-gcc-libs"
 makedepends=("${MINGW_PACKAGE_PREFIX}-fc"
              "git")
 optdepends=("git: Support for fetching projects with git")
+_bootstrap_src=${_realname}-${bootstrap}.F90
 source=(${_realname}-${pkgver}.zip::"${url}/releases/download/v${pkgver}/fpm-${pkgver}.zip"
-        ${_realname}-${pkgver}.F90::"${url}/releases/download/v${pkgver}/fpm-${pkgver}.F90")
+        ${_bootstrap_src}::"${url}/releases/download/v${bootstrap}/fpm-${bootstrap}.F90")
 sha256sums=('f6c998c9afd39eb42c7e80a306cfbed5faa77eaa42eb4f75b93864c338db1795'
-            '988a3317ee2448ee7207d0a29410f08a79c86bddac3314b2a175801a9cf58d27')
-noextract=(${_realname}-${pkgver}.F90)
+            '0c95309f365a40900108f3325e17e99a0456ce76046c37326349bf61b3df447a')
+noextract=(${_bootstrap_src})
 
 build() {
   cd "${srcdir}/${_realname}-${pkgver}"
@@ -34,7 +36,8 @@ build() {
   fi
 
   mkdir -p "${_build}/bootstrap"
-  "${_fc}" -J "${_build}/bootstrap" -o "${_build}/bootstrap/fpm" "${srcdir}"/${_realname}-${pkgver}.F90
+  "${_fc}" -J "${_build}/bootstrap" -o "${_build}/bootstrap/fpm" "${srcdir}/${_bootstrap_src}"
+  
 
   "${_build}/bootstrap/fpm" install \
     --compiler "${_fc}" \
