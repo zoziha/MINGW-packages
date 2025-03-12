@@ -19,10 +19,17 @@ makedepends=("${MINGW_PACKAGE_PREFIX}-fc"
 optdepends=("git: Support for fetching projects with git")
 _bootstrap_src=${_realname}-${bootstrap}.F90
 source=(${_realname}-${pkgver}.zip::"${url}/releases/download/v${pkgver}/fpm-${pkgver}.zip"
-        ${_bootstrap_src}::"${url}/releases/download/v${bootstrap}/fpm-${bootstrap}.F90")
+        ${_bootstrap_src}::"${url}/releases/download/v${bootstrap}/fpm-${bootstrap}.F90"
+        "001-fix-windows-CRLF.patch")
 sha256sums=('f6c998c9afd39eb42c7e80a306cfbed5faa77eaa42eb4f75b93864c338db1795'
-            '0c95309f365a40900108f3325e17e99a0456ce76046c37326349bf61b3df447a')
+            '0c95309f365a40900108f3325e17e99a0456ce76046c37326349bf61b3df447a'
+            'e942e9763668ad42d865c14c6b04e315fd8e722fb59aeb2ad0e8cf9f7b96fb5a')
 noextract=(${_bootstrap_src})
+
+prepare() {
+  cd "${srcdir}/fpm-${pkgver}"
+  patch -p1 -i "${srcdir}"/001-fix-windows-CRLF.patch
+}
 
 build() {
   cd "${srcdir}/${_realname}-${pkgver}"
